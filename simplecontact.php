@@ -32,6 +32,14 @@ class SimpleContactPlugin extends Plugin
   public function onTwigSiteVariables()
   {
     if ( ! $this->active ) return;
+
+    $page = $this->grav['page'];
+
+    if ( isset($page->header()->simplecontact) && (true === $page->header()->simplecontact || is_array($page->header()->simplecontact)) ) {
+      $this->grav['assets']
+        ->addCss('plugin://simplecontact/assets/css/simplecontact.css')
+        ->addJs('plugin://simplecontact/assets/js/simplecontact.js');
+    }
   }
 
   public function onPageInitialized()
@@ -88,13 +96,16 @@ class SimpleContactPlugin extends Plugin
 
   protected function validateFormData()
   {
+    $config = array_merge((array) $this->config->get('plugins.simplecontact'), (array) $this->grav['page']->header()->simplecontact);
     $form_data = $this->filterFormData($_POST);
 
     $name     = $form_data['name'];
     $email    = $form_data['email'];
     $message  = $form_data['message'];
 
-    if ( empty($name) || empty($message) || ! $email ) {
+    $antispam = $form_data['antispam'];
+
+    if ( empty($name) || empty($message) || ! $email || $antispam ) {
       return false;
     } else {
       return true;
@@ -104,17 +115,19 @@ class SimpleContactPlugin extends Plugin
   protected function filterFormData($form)
   {
     $defaults = [
-      'name'    => '',
-      'email'   => '',
-      'message' => ''
+      'name'      => '',
+      'email'     => '',
+      'message'   => '',
+      'antispam'  => ''
     ];
 
     $data = array_merge($defaults, $form);
 
     return [
-      'name'    => $data['name'],
-      'email'   => filter_var($data['email'], FILTER_SANITIZE_EMAIL),
-      'message' => $data['message']
+      'name'      => $data['name'],
+      'email'     => filter_var($data['email'], FILTER_SANITIZE_EMAIL),
+      'message'   => $data['message'],
+      'antispam'  => $data['antispam']
     ];
   }
 

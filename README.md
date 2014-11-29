@@ -48,6 +48,10 @@ The plugin comes with some sensible default configuration, that are pretty self 
         label: "Message"
         placeholder: "Add your message"
 
+      antispam:
+        label: "Antispam"
+        placeholder: "Please leave this field empty for Antispam"
+
       submit:
         label: "Submit"
 
@@ -79,6 +83,10 @@ Also you can override the default options per-page:
         message:
           label: "Message"
           placeholder: "Add your message"
+
+        antispam:
+          label: "Antispam"
+          placeholder: "Please leave this field empty for Antispam"
 
         submit:
           label: "Submit"
