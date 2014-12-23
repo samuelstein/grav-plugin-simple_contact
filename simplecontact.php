@@ -33,7 +33,7 @@ class SimpleContactPlugin extends Plugin
 
   public function onTwigSiteVariables()
   {
-    if ( $this->config->get('plugins.simplecontact.enabled') ) {
+    if ( $this->grav['config']->get('plugins.simplecontact.enabled') ) {
       $this->grav['assets']
         ->add('plugin://simplecontact/assets/css/simplecontact.css')
         ->add('plugin://simplecontact/assets/js/simplecontact.js');
@@ -44,12 +44,14 @@ class SimpleContactPlugin extends Plugin
   {
     $this->mergeConfig($this->grav['page']);
 
-    if ( $this->config->get('plugins.simplecontact.enabled') ) {
+    if ( $this->grav['config']->get('plugins.simplecontact.enabled') ) {
       $page   = $this->grav['page'];
       $twig   = $this->grav['twig'];
       $uri    = $this->grav['uri'];
 
-      $options = $this->config->get('plugins.simplecontact');
+      $options = $this->grav['config']->get('plugins.simplecontact');
+
+      $old_content = $page->content();
 
       if ( false === $uri->param('send') ) {
         if ( $_SERVER['REQUEST_METHOD'] == "POST") {
@@ -64,7 +66,7 @@ class SimpleContactPlugin extends Plugin
           }
 
         } else {
-          $page->content($twig->twig()->render('simplecontact/form.html.twig', ['simplecontact' => $options, 'page' => $page]));
+          $page->content($old_content . $twig->twig()->render('simplecontact/form.html.twig', ['simplecontact' => $options, 'page' => $page]));
         }
       } else {
         switch ( $uri->param('send') ) {
@@ -126,7 +128,7 @@ class SimpleContactPlugin extends Plugin
   protected function sendEmail()
   {
     $form   = $this->filterFormData($_POST);
-    $options = $this->config->get('plugins.simplecontact');
+    $options = $this->grav['config']->get('plugins.simplecontact');
 
     $recipient  = $options['recipient'];
     $subject    = $options['subject'];
@@ -146,11 +148,15 @@ class SimpleContactPlugin extends Plugin
 
   private function mergeConfig( Page $page )
   {
-    $defaults = (array) $this->config->get('plugins.simplecontact');
+    $defaults = (array) $this->grav['config']->get('plugins.simplecontact');
     if ( isset($page->header()->simplecontact) ) {
-      $this->config->set('plugins.simplecontact', array_merge($defaults, $page->header()->simplecontact));
+      if ( is_array($page->header()->simplecontact) ) {
+        $this->grav['config']->set('plugins.simplecontact', array_replace_recursive($defaults, $page->header()->simplecontact));
+      } else {
+        $this->grav['config']->set('plugins.simplecontact.enabled', $page->header()->simplecontact);
+      }
     } else {
-      $this->config->set('plugins.simplecontact.enabled', false);
+      $this->grav['config']->set('plugins.simplecontact.enabled', false);
     }
   }
 }
