@@ -1,5 +1,5 @@
 name: Simple Contact
-version: 1.0.2
+version: 1.0.3
 description: "This plugin adds contact form features for sending email."
 icon: envelope-o
 author:
@@ -8,6 +8,6 @@ author:
   url: http://nunopress.com
 homepage: https://github.com/nunopress/grav-plugin-simplecontact
 demo: http://grav-demo.nunopress.com/
-keywords: contact, plugin
+keywords: "contact, plugin"
 bugs: https://github.com/nunopress/grav-plugin-simplecontact/issues
 license: MIT
