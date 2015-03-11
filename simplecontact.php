@@ -42,7 +42,7 @@ class SimpleContactPlugin extends Plugin
 
   public function onPageInitialized()
   {
-    $this->mergeConfig($this->grav['page']);
+    $this->mergePluginConfig($this->grav['page']);
 
     if ( $this->grav['config']->get('plugins.simplecontact.enabled') ) {
       $page   = $this->grav['page'];
@@ -146,7 +146,7 @@ class SimpleContactPlugin extends Plugin
     }
   }
 
-  private function mergeConfig( Page $page )
+  private function mergePluginConfig( Page $page )
   {
     $defaults = (array) $this->grav['config']->get('plugins.simplecontact');
     if ( isset($page->header()->simplecontact) ) {
