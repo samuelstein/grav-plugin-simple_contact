@@ -145,15 +145,15 @@ class Simple_ContactPlugin extends Plugin
         return (mail($recipient, $subject, $email_content, $email_headers)) ? true : false;
     }
 
-    private function mergeConfig( Page $page )
+    private function mergePluginConfig( Page $page )
     {
         $defaults = (array) $this->grav['config']->get('plugins.simple_contact');
 
         if (isset($page->header()->simple_contact)) {
             if (is_array($page->header()->simple_contact)) {
-                $this->grav['config']->set('plugins.simple_contact', array_replace_recursive($defaults, $page->header()->simplecontact));
+                $this->grav['config']->set('plugins.simple_contact', array_replace_recursive($defaults, $page->header()->simple_contact));
             } else {
-                $this->grav['config']->set('plugins.simple_contact.enabled', $page->header()->simplecontact);
+                $this->grav['config']->set('plugins.simple_contact.enabled', $page->header()->simple_contact);
             }
         } else {
             $this->grav['config']->set('plugins.simple_contact.enabled', false);
