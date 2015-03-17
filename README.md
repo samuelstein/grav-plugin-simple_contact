@@ -12,11 +12,11 @@ The simplest way to install this plugin is via the [Grav Package Manager (GPM)](
 
     bin/gpm install simple_contact
 
-This will install the SimpleContact plugin into your `/user/plugins` directory within Grav. Its files can be found under `/your/site/grav/user/plugins/simple_contact`.
+This will install the plugin into your `/user/plugins` directory within Grav. Its files can be found under `/your/site/grav/user/plugins/simple_contact`.
 
 ## Manual Installation
 
-To install this plugin, just download the zip version of this repository and unzip it under `/your/site/grav/user/plugins`. Then, rename the folder to `simplecontact`. You can find these files either on [GetGrav.org](http://getgrav.org/downloads/plugins#extras).
+To install this plugin, just download the zip version of this repository and unzip it under `/your/site/grav/user/plugins`. Then, rename the folder to `simple_contact`. You can find these files either on [GetGrav.org](http://getgrav.org/downloads/plugins#extras).
 
 You should now have all the plugin files under
 
@@ -34,6 +34,9 @@ The plugin comes with some sensible default configuration, that are pretty self 
 
     subject: (string)                   // Subject for email.
     recipient: (string)                 // Email address.
+
+    content_type: "text/plain"          // Content type for email, you can change to "text/html" for sendign HTML email.
+    content_charset: "UTF-8"            // Content charset for email. You not need to change this.
 
     fields:                             // Default fields, you can translate the text label and placeholder.
       name:
@@ -70,6 +73,9 @@ Also you can override the default options per-page:
     simple_contact:
       subject: "New contact from your Grav site!"
       recipient: "pippo@example.it"
+
+      content_type: "text/html"
+      content_charset: "UTF-8"
 
       fields:
         name:

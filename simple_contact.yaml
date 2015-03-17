@@ -3,6 +3,9 @@ enabled: true
 subject: "New contact from Grav site!"
 recipient: "hello@example.com"
 
+content_type: "text/plain"
+content_charset: "UTF-8"
+
 fields:
   name:
     label: "Name"

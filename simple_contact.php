@@ -136,11 +136,12 @@ class Simple_ContactPlugin extends Plugin
         $recipient  = $options['recipient'];
         $subject    = $options['subject'];
 
-        $email_content = "Name: {$form['name']}\n";
-        $email_content .= "Email: {$form['email']}\n\n";
-        $email_content .= "Message:\n{$form['message']}\n";
+        $email_content = "Name: {$form['name']}" . "\n";
+        $email_content .= "Email: {$form['email']}" . "\n\n";
+        $email_content .= "Message:" . "\n" . "{$form['message']}" . "\n";
 
-        $email_headers = "From: {$form['name']} <{$form['email']}>";
+        $email_headers = "Content-type: {$options['content_type']}; charset={$options['content_charset']}" . "\r\n";
+        $email_headers .= "From: {$form['name']} <{$form['email']}>";
 
         return (mail($recipient, $subject, $email_content, $email_headers)) ? true : false;
     }
