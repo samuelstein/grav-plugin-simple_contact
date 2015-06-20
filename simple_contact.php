@@ -145,7 +145,7 @@ class Simple_ContactPlugin extends Plugin
         return (mail($recipient, $subject, $email_content, $email_headers)) ? true : false;
     }
 
-    private function mergePluginConfig( Page $page )
+    protected function mergePluginConfig( Page $page )
     {
         $defaults = (array) $this->grav['config']->get('plugins.simple_contact');
 
